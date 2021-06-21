@@ -63,6 +63,7 @@ public final class CoreDataFeedStore: FeedStore {
 				try ManagedCache.delete(context: context)
 				completion(nil)
 			} catch {
+				context.rollback()
 				completion(error)
 			}
 		}
