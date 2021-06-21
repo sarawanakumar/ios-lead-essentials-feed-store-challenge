@@ -45,7 +45,7 @@ public final class CoreDataFeedStore: FeedStore {
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
 		performSync { context in
 			do {
-				let cache = ManagedCache.uniqueFeedCache(from: context)
+				let cache = try ManagedCache.uniqueFeedCache(from: context)
 				cache.timestamp = timestamp
 				cache.feed = ManagedFeedImage.images(from: feed, in: context)
 				try context.save()

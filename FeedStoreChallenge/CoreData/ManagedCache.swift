@@ -17,7 +17,8 @@ final class ManagedCache: NSManagedObject {
 }
 
 extension ManagedCache {
-	static func uniqueFeedCache(from context: NSManagedObjectContext) -> ManagedCache {
+	static func uniqueFeedCache(from context: NSManagedObjectContext) throws -> ManagedCache {
+		try fetch(context: context).map(context.delete)
 		return ManagedCache(context: context)
 	}
 
