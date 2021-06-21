@@ -58,7 +58,14 @@ public final class CoreDataFeedStore: FeedStore {
 	}
 
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-		completion(nil)
+		performSync { context in
+			do {
+				try ManagedCache.delete(context: context)
+				completion(nil)
+			} catch {
+				completion(error)
+			}
+		}
 	}
 
 	private func performSync(_ action: @escaping (NSManagedObjectContext) -> Void) {
