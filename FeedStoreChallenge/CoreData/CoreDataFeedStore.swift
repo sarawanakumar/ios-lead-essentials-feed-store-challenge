@@ -50,7 +50,9 @@ public final class CoreDataFeedStore: FeedStore {
 				cache.feed = ManagedFeedImage.images(from: feed, in: context)
 				try context.save()
 				completion(nil)
-			} catch {}
+			} catch {
+				completion(error)
+			}
 		}
 	}
 
