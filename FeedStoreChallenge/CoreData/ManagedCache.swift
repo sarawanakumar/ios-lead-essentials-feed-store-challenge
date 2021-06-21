@@ -20,4 +20,13 @@ extension ManagedCache {
 	static func uniqueFeedCache(from context: NSManagedObjectContext) -> ManagedCache {
 		return ManagedCache(context: context)
 	}
+
+	static func fetch(context: NSManagedObjectContext) throws -> ManagedCache? {
+		let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
+		return try context.fetch(request).first
+	}
+
+	var localFeed: [LocalFeedImage] {
+		feed.compactMap { ($0 as? ManagedFeedImage)?.local }
+	}
 }
