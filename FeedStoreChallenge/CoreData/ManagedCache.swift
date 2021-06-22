@@ -17,13 +17,14 @@ final class ManagedCache: NSManagedObject {
 }
 
 extension ManagedCache {
-	static func uniqueFeedCache(from context: NSManagedObjectContext) throws -> ManagedCache {
+	static func uniqueFeedCache(in context: NSManagedObjectContext) throws -> ManagedCache {
 		try fetch(context: context).map(context.delete)
 		return ManagedCache(context: context)
 	}
 
 	static func fetch(context: NSManagedObjectContext) throws -> ManagedCache? {
 		let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
+		request.returnsObjectsAsFaults = false
 		return try context.fetch(request).first
 	}
 
